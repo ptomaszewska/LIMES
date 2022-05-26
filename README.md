@@ -26,7 +26,6 @@ Later, the scripts should be used in the following order:
 For further details on the implementation and the instructions on code usage, see the companion paper (tbd).
 
 
-License
 This project is under the MIT license. See LICENSE for details.
 
 
