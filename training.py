@@ -120,8 +120,7 @@ def train(args):
 
     filenames_train = glob.glob(
         file_path + "/train/embeddings_train_2020_0[4567]_??_??-sub{}.npy".format(args.seed%10))
-    filenames_train = sorted(filenames_train,
-                             reverse=args.rev) 
+    filenames_train = sorted(filenames_train) 
     filenames_val = [f.replace("train", "val") for f in filenames_train]
     # ensure perfect match between train and val filename
     n_files = len(filenames_train)
@@ -243,10 +242,6 @@ def parse_arguments():
                         type=int,
                         default=24,
                         help="batchsize")
-    parser.add_argument('--rev',
-                        '-r',
-                        action='store_true',
-                        help="Invert data order (default: false)")
     args = parser.parse_args()
     return args
 
