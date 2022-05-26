@@ -1,8 +1,9 @@
-# Official implementation of LIMES (Lightweight Conditional Model Extrapolation for Streaming Data under Class-Prior Shift)
+# Official implementation of LIMES 
+### (<ins>Li</ins>ghtweight Conditional <ins>M</ins>odel <ins>E</ins>xtrapolation for <ins>S</ins>treaming Data under Class-Prior Shift)
 
 The LIMES method deals with a problem of Class-Prior Shift in continual learning. 
 It incorporates bias correction term where extrapolation of class distribution is used. 
-To learn more about the LIMES, see our paper (tbd).
+To learn more about the LIMES, see the paper by Paulina Tomaszewska and Christoph H. Lampert (tbd).
 
 ### Setup
 We recommend creating a new conda virtual environment:
