@@ -101,7 +101,7 @@ def train(args):
     n_classes = args.nclasses
     batch_size = args.batchsize
     
-    if args.multi:
+    if args.ensemble:
         all_models = create_many_models(args.source, n_classes, args.nmodels)
         for model in all_models:
             model.summary(print_fn=lambda x: print(x,file=sys.stderr))
@@ -134,13 +134,13 @@ def train(args):
     for counter in range(n_files):
         
         # first construct or pick model for current hour
-        if args.multi:
+        if args.ensemble:
             hours_per_model = 24//args.nmodels
             model_id = (counter//hours_per_model)%args.nmodels
             model = all_models[model_id]        # current model based on hour
 
      
-        if args.mode == "limes" and counter > 1:
+        if args.mode == "LIMES" and counter > 1:
             pk_index = search_similar(W)
             p_t = W[pk_index + 1, :]
             indexes.append(pk_index)
@@ -181,7 +181,7 @@ def train(args):
         # train in batches on data of the hour that was the evaluation performed on
         W = np.append(W, np.ones((1, n_classes)), axis=0)
 
-        if args.mode == "reset": # start with fresh model every time
+        if args.mode == "restart": # start with fresh model every time
             del model
             model = create_model(args.source, args.nclasses)
 
@@ -214,9 +214,9 @@ def parse_arguments():
     parser.add_argument('--mode',
                         '-m',
                         type=str,
-                        default='zero',
+                        default='LIMES',
                         help="adaptation mode",
-                        choices=['zero', 'limes', 'multi', 'reset'])
+                        choices=['LIMES', 'incremental', 'ensemble', 'restart'])
     parser.add_argument('--path',
                         '-p',
                         type=str,
@@ -248,11 +248,11 @@ def parse_arguments():
 
 def main():
     args = parse_arguments()
-    if args.mode == "multi":
-        args.multi = True
-        args.mode = "zero"
+    if args.mode == "ensemble":
+        args.ensemble = True
+        args.mode = "incremental"
     else:
-        args.multi = False
+        args.ensemble = False
     
     if 24%args.nmodels != 0:
         print(f"Warning: 24 is not a multiple of number of models {args.nmodels}", file=sys.stderr)

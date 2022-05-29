@@ -7,7 +7,7 @@
 #SBATCH -e ./errors/process_raw_%j.err
 
 
-conda activate LIMES
+conda activate LIMES_env
 
 
 path_to_files = $1
