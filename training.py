@@ -6,6 +6,7 @@ import glob
 import numpy as np
 import pandas as pd
 import sys
+import random
 import tensorflow
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input
@@ -18,7 +19,6 @@ Implementation of LIMES and baseline methods for Class-Prior Shift in Continuous
 # if bias correction term is not needed, can be simply set to zero
 class Linear(tensorflow.keras.layers.Layer):
     def __init__(self, units=32, input_dim=32):
-        self.use_bias = use_bias
         super(Linear, self).__init__()
         w_init = tensorflow.random_normal_initializer()
         self.w = tensorflow.Variable(
@@ -144,6 +144,8 @@ def train(args):
             pk_index = search_similar(W)
             p_t = W[pk_index + 1, :]
             indexes.append(pk_index)
+        elif args.mode == "random" and counter > 0:
+            p_t = random.choice(W)
         else:  
             p_t = np.ones(n_classes) / n_classes
 
@@ -216,7 +218,7 @@ def parse_arguments():
                         type=str,
                         default='LIMES',
                         help="adaptation mode",
-                        choices=['LIMES', 'incremental', 'ensemble', 'restart'])
+                        choices=['LIMES', 'incremental', 'random', 'ensemble', 'restart'])
     parser.add_argument('--path',
                         '-p',
                         type=str,

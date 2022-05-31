@@ -2,9 +2,9 @@
 #SBATCH -N 1
 #SBATCH -n 1
 #SBATCH --mem 4G
-#SBATCH --time 18:00:00
-#SBATCH -o ./outputs/process_raw_%j.out
-#SBATCH -e ./errors/process_raw_%j.err
+#SBATCH --time 01-10:00:00
+#SBATCH -o ./outputs/embeddings_%j.out
+#SBATCH -e ./errors/embeddings_%j.err
 
 
 conda activate LIMES_env
@@ -20,7 +20,7 @@ do
 	do 
 		for hour in $(seq -f "%02g" 0 23)
 		do
-       			python process_raw_data.py "${path_to_files}_geo-2020_${month}_${day}_${hour}.jsonl" ${save_path}
+       			python embeddings.py "${path_to_files}_geo-2020_${month}_${day}_${hour}.ex.jsonl" ${save_path}
 		done
 	done
 done
