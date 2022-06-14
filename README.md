@@ -25,7 +25,7 @@ Later, the scripts should be used in the following order:
  
 Note that in bash scripts, it is necessary to specify a path to files with data and a path where the output is supposed to be saved.
 
-For further details on the implementation and the instructions on code usage, see the companion paper (tbd).
+For further details on the implementation and the instructions on code usage, see the file LIMES_reproducibity.pdf.
 
 
 License
